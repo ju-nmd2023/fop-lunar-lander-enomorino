@@ -6,6 +6,11 @@ let starX = [];
 let starY = [];
 let starAlpha = [];
 let centerX = 300;
+let ufoY =-200;
+let ufoX = 300;
+let velocity = 0.5;
+const acceleration = 0.1;
+
 
 function setup() {
     createCanvas(width, height);
@@ -60,7 +65,9 @@ function spaceSky(){
 
 //Stars
 
-function ufo(){
+function ufo(x, y){
+    push();
+    translate(x, y);
     stroke(87, 87, 87);
     strokeWeight(40);
     strokeJoin(ROUND);
@@ -120,6 +127,7 @@ function ufo(){
     strokeWeight(2);
     stroke(87, 87, 87);
     line(290, 335, 293, 335);
+    pop();
 }
 
 function draw(){
@@ -132,7 +140,9 @@ function draw(){
     ellipse(starX [index], starY [index], 1);
     starAlpha [index] = starAlpha [index] + 0.02;
  }
- ufo();
+ ufo(0, ufoY);
+ ufoY = ufoY + velocity;
+ velocity = velocity + acceleration;
 
 }
 
