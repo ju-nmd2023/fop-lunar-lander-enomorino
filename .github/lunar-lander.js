@@ -144,6 +144,10 @@ function draw(){
  ufoY = ufoY + velocity;
  velocity = velocity + acceleration;
 
+ if (mouseIsPressed){
+    velocity = velocity -0.5 ;
+ }
+
 }
 
 
