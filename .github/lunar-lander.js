@@ -10,6 +10,8 @@ let ufoY =-200;
 let ufoX = 300;
 let velocity = 0.5;
 const acceleration = 0.1;
+let thrusterY = ufoY - 100;
+let thrusterAlpha = [];
 
 
 function setup() {
@@ -64,6 +66,9 @@ function spaceSky(){
 }
 
 //Stars
+
+
+
 
 function ufo(x, y){
     push();
@@ -130,6 +135,26 @@ function ufo(x, y){
     pop();
 }
 
+function thruster(x, y){
+    push();
+    translate(x , y);
+    fill(255, 127, 80);
+    ellipse(300, 210, 40);
+    ellipse(300, 260, 30);
+    ellipse(300, 300, 20);
+    fill(255, 127, 80, 80);
+    ellipse(300, 210, 50);
+    ellipse(300, 260, 40);
+    ellipse(300, 300, 30);
+    fill(255, 127, 80, 60);
+    ellipse(300, 210, 60);
+    ellipse(300, 260, 50);
+    ellipse(300, 300, 40);
+    pop();
+}
+
+
+
 function draw(){
  
  spaceSky();
@@ -140,14 +165,20 @@ function draw(){
     ellipse(starX [index], starY [index], 1);
     starAlpha [index] = starAlpha [index] + 0.02;
  }
- ufo(0, ufoY);
- ufoY = ufoY + velocity;
- velocity = velocity + acceleration;
+ 
+ 
 
- if (mouseIsPressed){
-    velocity = velocity -0.5 ;
- }
+  ufoY = ufoY + velocity;
+  thrusterY = thrusterY + velocity;
+  velocity = velocity + acceleration;
+  
 
+  if (mouseIsPressed){
+     velocity = velocity -0.5 ;
+     thruster(0, ufoY+200);
+  }
+
+  ufo(0, ufoY);
 }
 
 
