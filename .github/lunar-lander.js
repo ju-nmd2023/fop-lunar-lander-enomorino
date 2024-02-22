@@ -6,12 +6,17 @@ let starX = [];
 let starY = [];
 let starAlpha = [];
 let centerX = 300;
-let ufoY =-200;
+let ufoY = -200;
 let ufoX = 300;
-let velocity = 0.5;
-const acceleration = 0.1;
+let velocity = 1;
+const acceleration = 0.2 ;
 let thrusterY = ufoY - 100;
-let thrusterAlpha = [];
+let gameIsRunning = false;
+let gameStart = true;
+let gameOver = false;
+let gameWon = false;
+
+
 
 
 function setup() {
@@ -71,8 +76,10 @@ function spaceSky(){
 
 
 function ufo(x, y){
+    scale(0.8); 
     push();
     translate(x, y);
+    translate(70, y);
     stroke(87, 87, 87);
     strokeWeight(40);
     strokeJoin(ROUND);
@@ -136,8 +143,10 @@ function ufo(x, y){
 }
 
 function thruster(x, y){
+
     push();
     translate(x , y);
+    translate(200, ufoY);
     fill(255, 127, 80);
     ellipse(300, 210, 40);
     ellipse(300, 260, 30);
@@ -153,33 +162,162 @@ function thruster(x, y){
     pop();
 }
 
+function explosion(){
+    fill(233, 200, 245);
+    ellipse(280, 350, 80);
+    ellipse(320, 330, 60);
+    ellipse(340, 360, 60);
+    ellipse(320, 390, 60);
+    ellipse(280, 390, 60);
+    fill(233, 200, 245, 80);
+    ellipse(280, 350, 100);
+    ellipse(320, 330, 80);
+    ellipse(340, 360, 80);
+    ellipse(320, 390, 80);
+    ellipse(280, 390, 80);
+    fill(233, 200, 245, 60);
+    ellipse(280, 350, 150);
+    ellipse(320, 330, 130);
+    ellipse(340, 360, 130);
+    ellipse(320, 390, 130);
+    ellipse(280, 390, 130);
 
+
+}
 
 function draw(){
  
  spaceSky();
+
+
  
+
+
+
  noStroke();
  for (let index in starX){
     fill(255,255,255, Math.abs(Math.sin(starAlpha [index ])* 255));
     ellipse(starX [index], starY [index], 1);
     starAlpha [index] = starAlpha [index] + 0.02;
  }
- 
- 
 
-  ufoY = ufoY + velocity;
-  thrusterY = thrusterY + velocity;
-  velocity = velocity + acceleration;
+
+
+ if (gameStart === true) {
+    gameIsRunning = false;
+    gameOver = false;
+    gameWon = false;
+    textSize(60);
+    textStyle(BOLD);
+    textAlign(CENTER);
+    fill(233, 200, 245);
+    text('LUNAR LANDER', 300, 225);
+    fill(233, 200, 245, 80);
+    text('LUNAR LANDER', 295, 225);
+    fill(233, 200, 245, 60);
+    text('LUNAR LANDER', 290, 225);
+    fill(233, 200, 245, 40);
+    text('LUNAR LANDER', 285, 225);
+    textSize(20);
+    textStyle(NORMAL);
+    fill(233, 200, 245);
+    text('Control the thrust by clicking space  and do not die...', 300, 280);
+    textSize(15);
+    text('click B to change the theme', 300, 310);
+    textSize(30);
+    text('press space to start!', 300, 390);
+    if  (keyIsPressed && key === " "){
+        gameStart = false;
+        gameIsRunning = true;
+    }
+ }
+ 
+ if (gameIsRunning===true){
+
+    ufoY = ufoY + velocity;
+    velocity = velocity + acceleration;
   
-
-  if (mouseIsPressed){
-     velocity = velocity -0.5 ;
-     thruster(0, ufoY+200);
+ ufo(0, ufoY);
+  if (keyIsPressed && key === " "){
+     velocity = velocity -0.5  ;
+     thruster(-130, ufoY + 200);
   }
 
-  ufo(0, ufoY);
+  
+ }
+
+
+  if (ufoY > 100 && velocity > 2.5){
+    gameIsRunning = false;
+    gameOver = true;
+   }
+
+   
+ if (gameOver === true){
+    textSize(60);
+    textStyle(BOLD);
+    textAlign(CENTER);
+    fill(233, 200, 245);
+    text('OUCH!', 300, 210);
+    fill(233, 200, 245, 80);
+    text('OUCH!', 295, 210);
+    fill(233, 200, 245, 60);
+    text('OUCH!', 290, 210);
+    fill(233, 200, 245, 40);
+    text('OUCH!', 285, 210);
+    fill(233, 200, 245);
+    textStyle(NORMAL);
+    textSize(20);
+    text('press space to restart', 300, 250);
+    explosion();
+    if (keyIsPressed && key === " "){
+        gameOver = false;
+        gameIsRunning = true;
+        ufoY = -200;
+        velocity = 1;
+    }
+    
+  }
+
+  if(ufoY > 90 && velocity < 2.5){
+    gameIsRunning = false;
+    gameWon = true;
+  }
+
+  if (gameWon === true){
+    gameOver = false;
+    gameIsRunning = false;
+    textSize(60);
+    textStyle(BOLD);
+    textAlign(CENTER);
+    fill(233, 200, 245);
+    text('YOU WIN!', 300, 225);
+    fill(233, 200, 245, 80);
+    text('YOU WIN!', 295, 225);
+    fill(233, 200, 245, 60);
+    text('YOU WIN!', 290, 225);
+    fill(233, 200, 245, 40);
+    text('YOU WIN!', 285, 225);
+    fill(233, 200, 245);
+    textStyle(NORMAL);
+    textSize(20);
+    text('press space to restart', 300, 250);
+    ufo(0, 100);
+    if (keyIsPressed && key === " "){
+        gameWon = false;
+    gameIsRunning = true;
+    ufoY = -200;
+    velocity = 1;
+    }
+  }
+  
+
+
+
+
+  
 }
+
 
 
 
