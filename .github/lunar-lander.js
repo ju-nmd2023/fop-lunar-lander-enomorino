@@ -28,6 +28,7 @@ let gameWonBlue = false;
 
 function setup() {
     createCanvas(width, height);
+    frameRate(30);
 
 }
 
@@ -382,9 +383,11 @@ function draw(){
  if (keyIsPressed && key ==="b"){
     gameStart = false;
     gameStartBlue = true;
+    gameOver = false;
  }else if (keyIsPressed && key ==="p"){
     gameStartBlue = false;
     gameStart = true;
+    gameOverBlue = false;
  }
 
 
@@ -464,13 +467,18 @@ function draw(){
     fill(173, 216, 230);
     textStyle(NORMAL);
     textSize(20);
-    text('press r to restart', 300, 250);
+    text('press r to restart or p to try another theme', 300, 250);
     explosionBlue();
     if (keyIsPressed && key === "r"){
         gameOverBlue = false;
         gameIsRunningBlue = true;
         ufoBlueY = -200;
         velocity = 1;
+    }else if(keyIsPressed && key === "p"){
+        gameOverBlue = false;
+        ufoBlueY = -200;
+        velocity = 1;
+        gameStart = true;
     }
     
   }
@@ -498,7 +506,7 @@ function draw(){
     fill(173, 216, 230);
     textStyle(NORMAL);
     textSize(20);
-    text('press r to restart', 300, 250);
+    text('press r to restart or p to try another theme', 300, 250);
     ufoBlue(0, 100);
     if (keyIsPressed && key === "r"){
         gameWonBlue = false;
@@ -506,6 +514,11 @@ function draw(){
     ufoBlueY = -200;
     velocity = 1;
 
+    }else if(keyIsPressed && key === "p"){
+        gameWonBlue = false;
+        ufoBlueY = -200;
+        velocity = 1;
+        gameStart = true;
     }
   }
 
@@ -583,13 +596,18 @@ function draw(){
     fill(233, 200, 245);
     textStyle(NORMAL);
     textSize(20);
-    text('press r to restart', 300, 250);
+    text('press r to restart or b to try another theme', 300, 250);
     explosion();
     if (keyIsPressed && key === "r"){
         gameOver = false;
         gameIsRunning = true;
         ufoY = -200;
         velocity = 1;
+    }else if(keyIsPressed && key === "b"){
+        gameOver = false;
+        ufoY = -200;
+        velocity = 1;
+        gameStartBlue = true;
     }
     
   }
@@ -618,13 +636,18 @@ function draw(){
     fill(233, 200, 245);
     textStyle(NORMAL);
     textSize(20);
-    text('press r to restart', 300, 250);
+    text('press r to restart or b to try another theme', 300, 250);
     ufo(0, 100);
     if (keyIsPressed && key === "r"){
         gameWon = false;
     gameIsRunning = true;
     ufoY = -200;
     velocity = 1;
+    }else if(keyIsPressed && key === "b"){
+        gameWon = false;
+        ufoY = -200;
+        velocity = 1;
+        gameStartBlue = true;
     }
   }
 
